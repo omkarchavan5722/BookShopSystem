@@ -40,6 +40,7 @@ public class LoginServlet extends HttpServlet {
 	public void destroy() {
 		try {
 			custDao.cleanUp();
+			bookDao.cleanUp();
 		} catch (SQLException e) {
 			System.out.println("err in destroy " + e);
 		}

@@ -18,6 +18,13 @@ public class Book {
 		this.price = price;
 	}
 
+	public Book(String title, String author, double price) {
+		super();
+		this.title = title;
+		this.author = author;
+		this.price = price;
+	}
+
 	public int getBookId() {
 		return bookId;
 	}
@@ -60,8 +67,7 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [bookId=" + bookId + ", title=" + title + ", author=" + author + ", category=" + category
-				+ ", price=" + price + "]";
+		return title+" "+author+" "+price;
 	}
 	
 	
