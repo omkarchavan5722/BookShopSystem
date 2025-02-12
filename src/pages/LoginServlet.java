@@ -10,7 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import dao.BookDaoImpl;
 import dao.CustomerDaoImpl;
 import pojo.Customer;
 
@@ -21,10 +23,12 @@ import pojo.Customer;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CustomerDaoImpl custDao;
+	private BookDaoImpl bookDao;
 
 	public void init() throws ServletException {
 		try {
 			custDao = new CustomerDaoImpl();
+			bookDao = new BookDaoImpl();
 		} catch (Exception e) {
 			throw new ServletException("err in init", e);
 		}
@@ -53,8 +57,17 @@ public class LoginServlet extends HttpServlet {
 			String password = request.getParameter("pass");
 			Customer authenticatedCustomer = custDao.authenticateCustomer(email, password);
 			if (authenticatedCustomer != null) {
+				// Get a HttpSession from WC
+				HttpSession session = request.getSession();
+				// adding clnt info to HttpSession object to get the details of clnt on every
+				// web page of this web app (provided cookies are enabled)
+				session.setAttribute("clnt_info", authenticatedCustomer);
+				// adding dao instances into session scope attributes.
+				session.setAttribute("cust_dao", custDao);
+				session.setAttribute("book_dao", bookDao);
 				pw.print("<h4 align='center'>Login Successful!!!</h4>");
-				pw.print("<h4 align='center'>Hello "+authenticatedCustomer.getName()+"</h4>");
+				pw.print("<h4 align='center'>Hello " + authenticatedCustomer.getName() + "</h4>");
+				// Above content is ignored by WC and PW buffer data is cleared as we are redirecting a clnt to next location 
 				response.sendRedirect("category");
 			} else {
 				pw.print("<h4 align='center'>Invalid Login</h4>");
