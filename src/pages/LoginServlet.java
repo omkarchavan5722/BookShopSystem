@@ -3,6 +3,7 @@ package pages;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import dao.BookDaoImpl;
 import dao.CustomerDaoImpl;
@@ -66,6 +69,8 @@ public class LoginServlet extends HttpServlet {
 				// adding dao instances into session scope attributes.
 				session.setAttribute("cust_dao", custDao);
 				session.setAttribute("book_dao", bookDao);
+				// adding cart instance in session scope
+				session.setAttribute("cart", new ArrayList<Integer>());
 				pw.print("<h4 align='center'>Login Successful!!!</h4>");
 				pw.print("<h4 align='center'>Hello " + authenticatedCustomer.getName() + "</h4>");
 				// Above content is ignored by WC and PW buffer data is cleared as we are redirecting a clnt to next location 

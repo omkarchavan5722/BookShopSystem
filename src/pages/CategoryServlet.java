@@ -46,6 +46,12 @@ public class CategoryServlet extends HttpServlet {
 				//submit btn
 				pw.print("<input type='submit' value='Choose'>");
 				pw.print("</form>");
+				pw.print("<form action='view_cart' method='post'>");
+				pw.print("<input type='submit' value='View Cart'>");
+				pw.print("</form>");
+				pw.print("<form action='checkout'>");
+				pw.print("<input type='submit' value='Checkout'>");
+				pw.print("</form>");
 			} else {
 				pw.print("<h4>Cookies disabled.. No session tracking!!!!</h4>");
 			}
